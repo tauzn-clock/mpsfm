@@ -1,0 +1,28 @@
+# .yaml setup when images have shared intrinsics
+1:
+  params: [604.32447211, 604.666982, 696.5, 396.5] # fx, fy, cx, cy
+  images: all
+  # or specify the images belonging to this camera
+  # images :
+  #   - indoor_DSC03018.JPG
+  #   - indoor_DSC03200.JPG
+  #   - indoor_DSC03081.JPG
+  #   - indoor_DSC03194.JPG
+  #   - indoor_DSC03127.JPG
+  #   - indoor_DSC03131.JPG
+  #   - indoor_DSC03218.JPG
+
+# .yaml setup when images have different intrinsics
+# camera 1
+# 1:
+#   params: [fx1, fy1, cx1, cy1]
+#   images:
+#     - im11.jpg
+#     - im12.jpg
+#     ...
+# 2:
+#   params: [fx2, fy2, cx2, cy2]
+#   images:
+#     - im21.jpg
+#     - im22.jpg
+#     ...
