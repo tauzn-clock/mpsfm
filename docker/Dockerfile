@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04
+FROM nvidia/cuda:12.3.2-devel-ubuntu20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -46,20 +46,16 @@ RUN apt-get update && apt-get install -y \
     nvidia-cuda-toolkit-gcc
 
 # Install Ceres.
-RUN apt-get install -y --no-install-recommends --no-install-suggests wget && \
-    wget "http://ceres-solver.org/ceres-solver-2.1.0.tar.gz" && \
-    tar zxf ceres-solver-2.1.0.tar.gz && \
-    mkdir ceres-build && \
-    cd ceres-build && \
-    cmake ../ceres-solver-2.1.0 -GNinja && \
-    ninja install
+RUN pip3 install pyceres
 
 COPY install_colmap.sh /tmp/install_colmap.sh
 RUN chmod +x /tmp/install_colmap.sh && \
     /tmp/install_colmap.sh && \
     rm /tmp/install_colmap.sh
 
-RUN git clone https://github.com/tauzn-clock/mpsfm.git 
+RUN git config --global url."https://github.com/".insteadOf git@github.com:
+RUN git config --global url."https://".insteadOf git://
+RUN git clone --recursive https://github.com/tauzn-clock/mpsfm.git 
 
 WORKDIR /mpsfm
 RUN pip3 install --upgrade pip
