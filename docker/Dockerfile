@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.3.2-devel-ubuntu20.04
+FROM nvidia/cuda:12.3.2-devel-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -59,6 +59,7 @@ RUN git clone --recursive https://github.com/tauzn-clock/mpsfm.git
 
 WORKDIR /mpsfm
 RUN pip3 install --upgrade pip
-#RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt
+RUN pip3 install -e .
 
 CMD ["bash"]
