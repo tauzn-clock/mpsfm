@@ -26,12 +26,18 @@ apt-get update && apt-get install -y \
 
 
 cd /
+git clone https://github.com/cvg/pyceres.git
+cd pyceres
+git checkout tags/v2.1
+python3 -m pip install /pyceres
+
+cd /
 git clone https://github.com/Zador-Pataki/colmap.git
 cd colmap
 mkdir build
 cd build
 compute_cap=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
-cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${compute_cap}
+cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${compute_cap} -flto=auto
 ninja
 ninja install
 

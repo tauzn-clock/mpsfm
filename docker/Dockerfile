@@ -19,8 +19,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN echo test
-
 COPY install_ceres_solver.sh /tmp/install_ceres_solver.sh
 RUN chmod +x /tmp/install_ceres_solver.sh && \
     /tmp/install_ceres_solver.sh && \
