@@ -19,34 +19,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y \
-    git \
-    cmake \
-    ninja-build \
-    build-essential \
-    libboost-program-options-dev \
-    libboost-graph-dev \
-    libboost-system-dev \
-    libeigen3-dev \
-    libflann-dev \
-    libfreeimage-dev \
-    libmetis-dev \
-    libgoogle-glog-dev \
-    libgtest-dev \
-    libgmock-dev \
-    libsqlite3-dev \
-    libglew-dev \
-    qtbase5-dev \
-    libqt5opengl5-dev \
-    libcgal-dev \
-    libceres-dev
+RUN echo test
 
-RUN apt-get update && apt-get install -y \
-    nvidia-cuda-toolkit \
-    nvidia-cuda-toolkit-gcc
-
-# Install Ceres.
-RUN pip3 install pyceres
+COPY install_ceres_solver.sh /tmp/install_ceres_solver.sh
+RUN chmod +x /tmp/install_ceres_solver.sh && \
+    /tmp/install_ceres_solver.sh && \
+    rm /tmp/install_ceres_solver.sh
 
 COPY install_colmap.sh /tmp/install_colmap.sh
 RUN chmod +x /tmp/install_colmap.sh && \
