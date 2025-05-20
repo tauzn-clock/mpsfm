@@ -36,4 +36,6 @@ cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${compute_cap}
 ninja
 ninja install
 
+pip3 install ruff
+
 pip3 install -e /colmap
