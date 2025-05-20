@@ -60,7 +60,7 @@ class ImageDataset(torch.utils.data.Dataset):
                 raise ValueError(f"Unknown format for path argument {paths}.")
 
             for name in self.names:
-                if not (root / Path(name)).exists():
+                if not (root / name).exists():
                     raise ValueError(f"Image {name} does not exists in root: {root}.")
 
     def __getitem__(self, idx):
