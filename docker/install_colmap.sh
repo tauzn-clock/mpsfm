@@ -24,8 +24,6 @@ apt-get update && apt-get install -y \
     nvidia-cuda-toolkit \
     nvidia-cuda-toolkit-gcc
 
-pip3 install pyceres==2.4
-
 cd /
 git clone https://github.com/Zador-Pataki/colmap.git
 cd colmap

@@ -29,10 +29,10 @@ RUN chmod +x /tmp/install_colmap.sh && \
     /tmp/install_colmap.sh && \
     rm /tmp/install_colmap.sh
 
-#COPY install_pyceres.sh /tmp/install_pyceres.sh
-#RUN chmod +x /tmp/install_pyceres.sh && \
-#    /tmp/install_pyceres.sh && \
-#    rm /tmp/install_pyceres.sh
+COPY install_pyceres.sh /tmp/install_pyceres.sh
+RUN chmod +x /tmp/install_pyceres.sh && \
+    /tmp/install_pyceres.sh && \
+    rm /tmp/install_pyceres.sh
 
 RUN git config --global url."https://github.com/".insteadOf git@github.com:
 RUN git config --global url."https://".insteadOf git://
