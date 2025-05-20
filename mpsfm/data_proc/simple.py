@@ -29,8 +29,8 @@ class SimpleParser(BaseDatasetParser):
         self.imnames = imnames
         if intrinsics_pth is None:
             intrinsics_pth = Path(data_dir) / "intrinsics.yaml"
-            with open(intrinsics_pth, encoding="utf-8") as f:
-                intrinsics = yaml.safe_load(f)
+        with open(intrinsics_pth, encoding="utf-8") as f:
+            intrinsics = yaml.safe_load(f)
         if len(intrinsics) == 1:
             assert intrinsics[1]["images"] == "all" or (
                 isinstance(intrinsics[1]["images"], list) and len(intrinsics[1]["images"]) == len(self.imnames)
@@ -45,7 +45,7 @@ class SimpleParser(BaseDatasetParser):
 
             shapes = []
             for imname in images:
-                im = Image.open(rgb_dir / imname)
+                im = Image.open(rgb_dir / Path(imname))
                 shapes.append(im.size)
             assert len(set(shapes)) == 1, "All images must have the same shape"
             width, height = shapes[0]
