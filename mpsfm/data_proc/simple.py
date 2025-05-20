@@ -26,7 +26,7 @@ class SimpleParser(BaseDatasetParser):
             rgb_dir = Path(data_dir) / "images"
         if imnames is None:
             imnames = [im.name for im in rgb_dir.iterdir()]
-        self.imnames = [Path(imname) for imname in imnames]
+        self.imnames = imnames
         if intrinsics_pth is None:
             intrinsics_pth = Path(data_dir) / "intrinsics.yaml"
         with open(intrinsics_pth, encoding="utf-8") as f:
