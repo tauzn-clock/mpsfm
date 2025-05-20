@@ -3,6 +3,9 @@ local/weights/*
 local/example/sfm_outputs/*
 *.html
 
+custom_dataset/images/*
+custom_dataset/cache_dir/*
+custom_dataset/intrinsics.yaml
 
 # BOILERPLATE
 __pycache__/
