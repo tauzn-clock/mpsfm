@@ -48,6 +48,8 @@ if VISUALISE and False:
     fig = out_rec.vis_depth_maps(fig=fig, images_dir=data_dir / "images", name="prior", prior=True, dmap_rescale=0.8)
     fig = out_rec.vis_cameras(fig)
 
+    fig.show()
+
 if VISUALISE and False:
     # visualize sparse anchors (blue) and dense points (red)
     sparse_dense_mode = "sparse_mask"
@@ -61,22 +63,27 @@ if VISUALISE and False:
 
 print("Propagated uncertainties per pixel...")
 intstds = [image.calculate_int_covs_for_entire_image(False, False) for image in tqdm(out_rec.images.values())]
-priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
-
-p90 = np.percentile(np.hstack(intstds), 90)
 
 if VISUALISE:
+priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
+priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
+
+    priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
+
+    p90 = np.percentile(np.hstack(intstds), 90)
+
     # Prior uncertainties
     fig, ax = plot_images([std for std in priorstds], dpi=50, vmax=p90, cmaps="viridis")
-    fig.figsavefig(data_dir / "visualise/depth_uncertainty_prior.png", dpi=300)
+    fig.savefig(data_dir / "visualise/depth_uncertainty_prior.png", dpi=300)
 
     # Propagated uncertainties
     fig, ax = plot_images([std for std in intstds], dpi=50, vmax=p90, cmaps="viridis")
     fig.savefig(data_dir / "visualise/depth_uncertainty.png", dpi=300)
+
+if VISUALISE and False:
     # Find 2D points used to optimize the depth
     koords_with_3d = [image.keypoint_coords_with_3d() * image.camera.sx for image in out_rec.images.values()]
-    fig, ax = plot_keypoints(koords_with_3d, colors="r", ps=2)
-    fig.savefig(data_dir / "visualise/keypoints.png", dpi=300)
+    plot_keypoints(koords_with_3d, colors="r", ps=2)
 
 if VISUALISE:
     p80 = np.percentile(np.hstack(intstds), 80)
