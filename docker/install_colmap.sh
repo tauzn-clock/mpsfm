@@ -24,12 +24,7 @@ apt-get update && apt-get install -y \
     nvidia-cuda-toolkit \
     nvidia-cuda-toolkit-gcc
 
-
-cd /
-git clone https://github.com/cvg/pyceres.git
-cd pyceres
-git checkout tags/v2.1
-python3 -m pip install /pyceres
+pip3 install pyceres==2.4
 
 cd /
 git clone https://github.com/Zador-Pataki/colmap.git
@@ -37,7 +32,7 @@ cd colmap
 mkdir build
 cd build
 compute_cap=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | tr -d '.')
-cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${compute_cap} -flto=auto
+cmake .. -GNinja -DCMAKE_CUDA_ARCHITECTURES=${compute_cap}
 ninja
 ninja install
 
