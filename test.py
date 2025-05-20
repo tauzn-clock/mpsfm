@@ -10,18 +10,16 @@ from mpsfm.vars import gvars
 from mpsfm.utils.io import read_image
 from mpsfm.utils.viz import plot_images, plot_keypoints
 
-VISUALISE = True
+VISUALISE = False
 
 # select pipeline: mpsfm/sfm/configs
 cname = "sp-mast3r-dense"
 conf = load_cfg(gvars.SFM_CONFIG_DIR / f"{cname}.yaml", return_name=False)
 
-data_dir = pathlib.Path("/mpsfm/custom_dataset")
+data_dir = gvars.ROOT / "local/example" # pathlib.Path("/mpsfm/custom_dataset")
 imanmes = sorted(list((data_dir / "images").iterdir()))
 
 if VISUALISE:
-
-
     fig, axs = plot_images([read_image(imname) for imname in imanmes], dpi=30)
     fig.savefig(data_dir / "visualise/all_images.png", dpi=300)
 
@@ -49,7 +47,7 @@ if VISUALISE and False:
     fig = out_rec.vis_cameras(fig)
 
     fig.show()
-
+    
 if VISUALISE and False:
     # visualize sparse anchors (blue) and dense points (red)
     sparse_dense_mode = "sparse_mask"
@@ -65,8 +63,6 @@ print("Propagated uncertainties per pixel...")
 intstds = [image.calculate_int_covs_for_entire_image(False, False) for image in tqdm(out_rec.images.values())]
 
 if VISUALISE:
-priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
-priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
 
     priorstds = [image.depth.uncertainty for image in out_rec.images.values()]
 
