@@ -9,11 +9,19 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 if os.path.exists(f"{current_dir}/images"):
     os.system(f"rm -rf {current_dir}/images")
 
-os.system(f"mkdir {current_dir}/images")
+if os.path.exists(f"{current_dir}/depth"):
+    os.system(f"rm -rf {current_dir}/depth")
 
-for i in range(0,1000, 100):
+os.system(f"mkdir {current_dir}/images")
+os.system(f"mkdir {current_dir}/depth")
+
+for i in range(200,500, 50):
     img = Image.open(f"{DATA_PATH}/rgb/{i}.png")
     img.save(f"{current_dir}/images/{i}.png")
+
+    depth = Image.open(f"{DATA_PATH}/depth/{i}.png")
+    depth.save(f"{current_dir}/depth/{i}.png")
+
 
 fx = 306.9346923828125
 fy = 306.8908386230469
