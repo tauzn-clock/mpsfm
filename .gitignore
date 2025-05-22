@@ -9,6 +9,8 @@ custom_dataset/cache_dir/*
 custom_dataset/visualise/*
 custom_dataset/intrinsics.yaml
 
+*vscode
+
 # BOILERPLATE
 __pycache__/
 *.py[cod]
