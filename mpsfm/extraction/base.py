@@ -173,6 +173,55 @@ class Extraction(BaseClass):
             raise NotImplementedError(f"Matcher {matcher_conf.type} not implemented")
         confs["matcher"] = matcher_conf
         return confs
+    
+    def use_measured(self, overwrite=False):
+        print("Use measured depth")
+        detph_conf = self.extract_depth(overwrite=overwrite)
+        normals_conf = self.extract_normals(overwrite=overwrite)
+        
+        import h5py
+        
+        def hdf5_to_dict(h5file):
+            def recurse(h5obj):
+                out = {}
+                for key, item in h5obj.items():
+                    if isinstance(item, h5py.Group):
+                        out[key] = recurse(item)
+                    elif isinstance(item, h5py.Dataset):
+                        out[key] = item[()]  # Convert to NumPy or scalar
+                return out
+
+            with h5py.File(h5file, "r") as f:
+                return recurse(f)
+        
+        data = hdf5_to_dict(self.depth_dir)
+
+        from PIL import Image
+        import numpy as np
+        import cv2
+        
+        for k in data.keys():
+            depth = Image.open(self.scene_parser.rgb_dir/"../depth"/k).convert("I;16")
+            depth = np.array(depth) / 1000
+            
+            depth = cv2.resize(depth, (data[k]["depth"].shape[1], data[k]["depth"].shape[0]), interpolation=cv2.INTER_NEAREST)
+            depth_variance = depth * 0.01
+            depth_valid = depth > 0
+            
+            data[k]["depth"] = depth
+            data[k]["depth_variance"] = depth_variance
+            data[k]["valid"] = depth_valid
+            
+        #Rewrite over self.depth_dir
+        with h5py.File(self.depth_dir, "a", libver="latest") as fd:
+            if k in fd:
+                del fd[k]
+            grp = fd.create_group(k)
+            for k0, v in data[k].items():
+                grp.create_dataset(k0, data=v)
+        
+
+        return detph_conf, normals_conf
 
     def extract_mono(self, overwrite=False):
         """Extract monocular priors."""

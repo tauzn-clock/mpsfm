@@ -82,6 +82,7 @@ class MpsfmMapper(BaseClass):
                 "dense",
                 "depth",
                 "cache",
+                "measured",
             ], f"Invalid matches mode {mode}. Must be one of ['sparse', 'dense', 'depth', 'cache']"
         assert any(
             m in ["sparse", "dense"] for m in match_mode_split
@@ -143,7 +144,9 @@ class MpsfmMapper(BaseClass):
             self.extractor.extract_pairs(self.conf.pairs_type)
             self.extractor.extract_pairwise()
 
-            if "depth" in self.conf.matches_mode:
+            if "measured" in self.conf.matches_mode:
+                self.extractor.use_measured()
+            elif "depth" in self.conf.matches_mode:
                 self.extractor.extract_normals()
             else:
                 self.extractor.extract_mono()
