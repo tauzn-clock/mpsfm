@@ -1,7 +1,7 @@
 import numpy as np
 
 def depth_to_3d(depth, intrinsic):
-    W, H = depth.shape
+    H, W = depth.shape
     
     # Generate a grid of (x, y) coordinates
     x, y = np.meshgrid(np.arange(W), np.arange(H))
